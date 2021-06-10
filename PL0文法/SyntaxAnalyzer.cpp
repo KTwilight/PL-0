@@ -280,52 +280,6 @@ int SyntaxAnalyzer::parseConstDefinedLoop()
     }
 }
 
-//int SyntaxAnalyzer::parseConstDefinedLoop_1()
-//{	
-//    //	< 常量定义反复1 > →<常量定义><常量定义反复2>
-//    SymbolType SType = symbols.front().symbolType;
-//    int errorCode;
-//    if (SType == ST_identifier)
-//    {
-//        errorCode = parseConstDefined();
-//        if (errorCode != 0)
-//            return errorCode;
-//
-//        errorCode = parseConstDefinedLoop_2();
-//        if (errorCode != 0)
-//            return errorCode;
-//
-//        return 0;
-//    }
-//    else
-//    {
-//        return 4;   //4 : const, var，procedure后应为标识符。
-//    }
-//}
-//
-//int SyntaxAnalyzer::parseConstDefinedLoop_2()
-//{
-//    //	<常量定义反复2>→(, ) < 常量定义反复1 > | ε
-//    SymbolType SType = symbols.front().symbolType;
-//    int errorCode;
-//    //<常量定义反复2>→(,)< 常量定义反复1>
-//    if (SType == ST_comma)
-//    {
-//        SType = getNextSymbolType();
-//        errorCode = parseConstDefinedLoop_1();
-//        return errorCode;
-//    }
-//    //<常量定义反复2>→ε
-//    else if(SType == ST_semicolon)
-//    {
-//        return 0;
-//    }
-//    else
-//    {
-//        return 5; //5 : 漏掉了, 或;。
-//    }
-//}
-
 int SyntaxAnalyzer::parseVarDescSection()
 {
     // <变量说明部分>→(VAR) (标识符) < 标识符反复 > (;) | ε
@@ -399,48 +353,6 @@ int SyntaxAnalyzer::parseIdentifierLoop()
         return 5; // 5 : 漏掉了, 或﹔。
     }
 }
-//int SyntaxAnalyzer::parseIdentifierLoop_1()
-//{
-//    //<标识符反复1>→(标识符)<标识符反复2>
-//    SymbolType SType = symbols.front().symbolType;
-//    int errorCode;
-//    if (SType == ST_identifier)
-//    {
-//        symbols.pop();
-//        errorCode = parseIdentifierLoop_2();
-//        return errorCode;
-//    }
-//    else
-//    {
-//        return 4;//4 : const, var，procedure后应为标识符。
-//
-//    }
-//
-//    return 0;
-//}
-//int SyntaxAnalyzer::parseIdentifierLoop_2()
-//{
-//    //	<常量定义反复2>→(, ) < 常量定义反复1 > | ε
-//    SymbolType SType = symbols.front().symbolType;
-//    int errorCode;
-//
-//    if (SType == ST_comma)
-//    {
-//        symbols.pop();
-//        errorCode = parseIdentifierLoop_1();
-//        return errorCode;
-//    }
-//    //	<常量定义反复2>→(, ) < 常量定义反复1 >
-//    else if(SType == ST_semicolon)
-//    {
-//        return 0;
-//    }
-//    else
-//    {
-//        return 5; //5 : 漏掉了, 或;。
-//    }
-//
-//}
 int SyntaxAnalyzer::parseProcedureDescSection()
 {
     //	<过程说明部分>→<过程首部><分程序>; <过程说明部分> | ε
@@ -672,56 +584,6 @@ int SyntaxAnalyzer::parseItemLoop()
 
     return 0;
 }
-//int SyntaxAnalyzer::parseItemLoop_1()
-//{
-//    //	<项反复1>→<项1><项反复2>
-//    SymbolType SType = peekNextSymbolType();
-//    int errorCode;
-//    if (
-//        SType == ST_identifier ||
-//        SType == ST_integer ||
-//        SType == ST_lparen)
-//    {
-//        errorCode = parseItem_1();
-//        if (errorCode != 0)
-//            return errorCode;
-//        errorCode = parseItemLoop_2();
-//    }
-//    return 0;
-//}
-//int SyntaxAnalyzer::parseItemLoop_2()
-//{
-//    //	<项反复2>→ + <项反复1> | -<项反复1> | ε
-//    SymbolType SType = peekNextSymbolType();
-//    int errorCode;
-//    //<项反复2>→ + <项反复1> | -<项反复1>
-//    if (
-//        SType == ST_plus ||
-//        SType == ST_minus
-//        )
-//    {
-//        symbols.pop();
-//        errorCode = parseItemLoop_1();
-//        return errorCode;
-//    }
-//    //<项反复2>→ ε
-//    else if(
-//        SType == ST_period||
-//        SType == ST_semicolon||
-//        SType == ST_rparen||
-//        isROP(SType)||
-//        SType == ST_end||
-//        SType == ST_then||
-//        SType == ST_do
-//        )
-//    {
-//        return 0;
-//    }
-//    else
-//    {
-//        return -1;  //真不知道还能有啥错
-//    }
-//}
 int SyntaxAnalyzer::parseItem()
 {
     // <项>→<因子><因子反复> 
@@ -742,57 +604,6 @@ int SyntaxAnalyzer::parseItem()
         return -1; //在这之前应该就被杀掉了
     }
 }
-//int SyntaxAnalyzer::parseItem_1()
-//{
-//    //	<项1>→<因子><项2>
-//    SymbolType SType = peekNextSymbolType();
-//    int errorCode;
-//    if (SType == ST_identifier ||
-//        SType == ST_integer ||
-//        SType == ST_lparen) 
-//    {
-//        errorCode = parseFactor();
-//        if (errorCode != 0)
-//            return errorCode;
-//        
-//        errorCode = parseItem_2();
-//        return errorCode;
-//    }
-//    else
-//    {
-//        return -1;
-//    }
-//}
-//int SyntaxAnalyzer::parseItem_2()
-//{
-//    //	<项2>→ * <项1>|/<项1> | ε
-//    SymbolType SType = peekNextSymbolType();
-//    int errorCode;
-//    //<项2>→ * <项1>|/<项1>
-//    if (SType == ST_times ||
-//        SType == ST_slash)
-//    {
-//        symbols.pop();
-//        errorCode = parseItem_1();
-//        return errorCode;
-//    }
-//    //<项2>→ ε
-//    else if(
-//        SType == ST_period ||
-//        SType == ST_semicolon ||
-//        SType == ST_rparen ||
-//        isROP(SType) ||
-//        SType == ST_end ||
-//        SType == ST_then ||
-//        SType == ST_do)
-//    {
-//        return 0;
-//    }
-//    else
-//    {
-//        return -1;
-//    }
-//}
 int SyntaxAnalyzer::parseFactor()
 {
     //	<因子>→(标识符) | (无符号整数) | '('表达式')'
@@ -1093,51 +904,6 @@ int SyntaxAnalyzer::parseExpressionLoop()
 
     return 0;
 }
-//
-//int SyntaxAnalyzer::parseExpresstionLoop_1()
-//{
-//	//	< 表达式反复1 > →<表达式><表达式反复2>
-//    SymbolType SType = peekNextSymbolType();
-//    int errorCode;
-//    if (SType == ST_plus ||
-//        SType == ST_minus ||
-//        SType == ST_identifier ||
-//        SType == ST_integer ||
-//        SType == ST_lparen)
-//    {
-//        errorCode = parseExpression();
-//        if (errorCode != 0)
-//            return errorCode;
-//        errorCode = parseExpresstionLoop_2();
-//        return errorCode;
-//    }
-//    else
-//    {
-//        return 24;//24 : 表达式的开始符不能是此符号。
-//    }
-//
-//}
-//
-//int SyntaxAnalyzer::parseExpresstionLoop_2()
-//{
-//    //	<表达式反复2>→, <表达式反复1> | ε
-//    SymbolType SType = peekNextSymbolType();
-//    int errorCode;
-//    if (SType == ST_comma)
-//    {
-//        symbols.pop();
-//        errorCode = parseExpresstionLoop_1();
-//        return errorCode;
-//    }
-//    else if (SType == ST_rparen)
-//    {
-//        return 0;
-//    }
-//    else
-//    {
-//        return 22;//22 : 表达式中漏掉右括号)。
-//    }
-//}
 
 const SymbolType& SyntaxAnalyzer::peekNextSymbolType()
 {
