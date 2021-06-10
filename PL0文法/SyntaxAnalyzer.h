@@ -94,7 +94,7 @@ private:
 	//	< ¸´ºÏÓï¾ä > ¡ú(BEGIN) <Óï¾ä>< Óï¾ä·´¸´> (END)
 	int parseCompoundStatement();
 
-	//	<Óï¾ä·´¸´>¡ú;<Óï¾ä·´¸´>|¦Å
+	//	<Óï¾ä·´¸´>¡ú;<Óï¾ä><Óï¾ä·´¸´>|¦Å
 	int parseStatementLoop();
 
 	//	<Ìõ¼þÓï¾ä>¡ú(IF) <Ìõ¼þ> (THEN) <Óï¾ä>

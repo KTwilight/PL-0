@@ -880,7 +880,7 @@ int SyntaxAnalyzer::parseCompoundStatement()
 }
 int SyntaxAnalyzer::parseStatementLoop()
 {
-    //	<Óï¾ä·´¸´>¡ú;<Óï¾ä·´¸´>|¦Å
+    //	<Óï¾ä·´¸´>¡ú;<Óï¾ä><Óï¾ä·´¸´>|¦Å
     SymbolType SType = peekNextSymbolType();
     int errorCode;
     if (SType == ST_semicolon)

@@ -1,1 +1,22 @@
-v1:= v1 + 1;
+const i=1,j=2,k=3;
+
+var a,b,c;
+
+procedure test_pro
+    temp := 2;
+
+begin
+    a := (1 * 2) + 3 * 4 * 5 *6 * 7 * 8 * 9 * 10;
+    sum := 0;
+    i := 100;
+    while i > 0 do
+    begin
+        sum := sum + i;
+        i := sum + 1;
+    end;
+    if a >= 0
+    then a := 2;
+    call test_pro;
+    read(sum);
+    write(sum);
+end.
